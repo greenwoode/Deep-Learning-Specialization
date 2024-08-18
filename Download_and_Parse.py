@@ -23,7 +23,13 @@ down_res = 720 #resolution to pass to yt-dlp.
 
 frame_res = '256x256' #desired frame size, must be in 'AxB' format
 K = 20000 #number of kept frames
+FPS = 24 #frame rate to convert videos at.
 
+#Frames to drop, set to 1k to avoid menus and credits.
+CULL_START = 1000
+CULL_END = 1000
+
+#start threades
 _DOWNLOAD_  =   True
 _SPLIT_     =   True
 _TRIM_      =   True
@@ -158,7 +164,7 @@ def Split(status, topics, N):
                             (
                                 ffmpeg
                                 .input(f'{_BASE_LOCATION_}\\data\\{topic.replace(";", " -").replace(":", " -")}\\VIDEO\\{vid}')
-                                .filter('fps', fps=24)
+                                .filter('fps', fps=FPS)
                                 .output(f'{_BASE_LOCATION_}\\data\\{topic.replace(";", " -").replace(":", " -")}\\FRAMES\\{topic.replace(";", ":").replace(":", " -")}_%05d.jpg', s=frame_res, sws_flags='bilinear')
                                 .overwrite_output()
                                 .run()
@@ -181,7 +187,7 @@ def Split(status, topics, N):
                         (
                             ffmpeg
                             .input(f'{_BASE_LOCATION_}\\data\\{topic.replace(";", " -").replace(":", " -")}\\VIDEO\\{vid}')
-                            .filter('fps', fps=24)
+                            .filter('fps', fps=FPS)
                             .output(f'{_BASE_LOCATION_}\\data\\{topic.replace(";", " -").replace(":", " -")}\\FRAMES\\{topic.replace(";", ":").replace(":", " -")}_%05d.jpg', s=frame_res, sws_flags='bilinear')
                             .overwrite_output()
                             .run()
@@ -214,13 +220,13 @@ def Trim(status, topics, N, K):
                 
                         frames = os.listdir(f'{_BASE_LOCATION_}\\data\\{topic.replace(";", ":").replace(":", "#")}\\FRAMES\\')
                 
-                        if K <= len(frames)-2000:
+                        if K <= len(frames)-(CULL_START + CULL_END):
                             num = K
                         else:
-                            num = len(frames)-2000
+                            num = len(frames)-(CULL_START + CULL_END)
 
                         try:
-                            gFrames = np.linspace(1000, len(frames)-1000, num).astype(int)
+                            gFrames = np.linspace(CULL_START, len(frames)-CULL_END, num).astype(int)
                         except: #TOO Few Frames, use them all
                             gFrames = np.arange(len(frames))
                             
@@ -247,12 +253,12 @@ def Trim(status, topics, N, K):
                 
                     frames = os.listdir(f'{_BASE_LOCATION_}\\data\\{topic.replace(";", ":").replace(":", "#")}\\FRAMES\\')
                 
-                    if K <= len(frames)-2000:
+                    if K <= len(frames)-(CULL_START + CULL_END):
                         num = K
                     else:
-                        num = len(frames)-2000
+                        num = len(frames)-(CULL_START + CULL_END)
 
-                    gFrames = np.linspace(1000, len(frames)-1000, num).astype(int)
+                    gFrames = np.linspace(CULL_START, len(frames)-CULL_END, num).astype(int)
                     if not os.path.exists(f'{_BASE_LOCATION_}\\clean_data\\{topic.replace(";", "#").replace(":", "#")}\\'):
                         os.mkdir(f'{_BASE_LOCATION_}\\clean_data\\{topic.replace(";", "#").replace(":", "#")}\\')
                   
