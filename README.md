@@ -1,6 +1,6 @@
 # Custom Dataset Building
 
-These scripts are used to either build a new dataset from YouTUbe, or convert the ImageNet dataset, as a format that can be used for the [model branch](https://github.com/greenwoode/Deep-Learning-Specialization/tree/TF-CNN) code. This code creates a  `./Data/` folder that it operates in. The fully custom YouTube dataset can be downloaded [here](https://www.dropbox.com/scl/fi/h8rih7gzn5wrvgp8d5ous/Games.7z?rlkey=jvnve5op6vugj31clri2fn9pu&st=hy36u76l&dl=0). If this link does not work, please contact me so I can correct it. The slower alternetive is to run the scripts in this branch to re-generate the dataset, or create a new dataset of your own.
+These scripts are used to either build a new dataset from YouTUbe, or convert the ImageNet dataset, as a format that can be used for the [model branch](https://github.com/greenwoode/Deep-Learning-Specialization/tree/TF-CNN) code. This code creates a  `./Data/` folder that it operates in. The fully custom YouTube dataset can be downloaded [here](https://www.dropbox.com/scl/fi/h8rih7gzn5wrvgp8d5ous/Games.7z?rlkey=jvnve5op6vugj31clri2fn9pu&st=hy36u76l&dl=0) (file->download). If this link does not work, please contact me so I can correct it. The slower alternetive is to run the scripts in this branch to re-generate the dataset, or create a new dataset of your own.
 
 ## Requirements:
 
